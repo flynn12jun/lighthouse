@@ -1,10 +1,11 @@
 import {
   authHeaders,
+  networks,
   DAOContractClient,
   DECENTRALAND_ADDRESS,
   initializeMetricsServer
-} from '@dcl/catalyst-node-commons'
-import { DAOContract } from '@dcl/catalyst-contracts'
+} from '@zqbflynn/catalyst-node-commons'
+
 import { COMMS_API } from '@dcl/catalyst-api-specs'
 import cors from 'cors'
 import express from 'express'
@@ -25,15 +26,26 @@ import { peersCheckJob } from './peers/peersCheckJob'
 import { PeersService } from './peers/peersService'
 import { configureRoutes } from './routes'
 import { AppServices } from './types'
+import { HTTPProvider } from 'eth-connect'
+import fetch from 'node-fetch'
 
 const LIGHTHOUSE_PROTOCOL_VERSION = '1.0.0'
-const DEFAULT_ETH_NETWORK = 'ropsten'
+const DEFAULT_ETH_NETWORK = 'zqb'
 
 const CURRENT_ETH_NETWORK = process.env.ETH_NETWORK ?? DEFAULT_ETH_NETWORK
 
 async function main() {
-  const daoClient = new DAOContractClient(DAOContract.withNetwork(CURRENT_ETH_NETWORK))
+  // const daoClient = new DAOContractClient(DAOContract.withNetwork(CURRENT_ETH_NETWORK))
+  /*
+   * author: Flynn Jun
+   * function: 升级获取daoClient方式
+   * date: 2022/10/10
+   * */
+  const network = networks[CURRENT_ETH_NETWORK]
+  const url = network.http
+  const ethereumProvider = new HTTPProvider(url, { fetch })
 
+  const daoClient = new DAOContractClient(ethereumProvider)
   const name = await pickName(process.env.LIGHTHOUSE_NAMES, daoClient)
   console.info('Picked name: ' + name)
 

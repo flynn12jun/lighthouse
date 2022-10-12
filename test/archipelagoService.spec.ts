@@ -1,4 +1,4 @@
-import { untilTrue } from '@dcl/catalyst-node-commons'
+import { untilTrue } from '@zqbflynn/catalyst-node-commons'
 import { Island } from '@dcl/archipelago'
 import { ConfigService, LighthouseConfig } from '../src/config/configService'
 import { ArchipelagoService } from '../src/peers/archipelagoService'

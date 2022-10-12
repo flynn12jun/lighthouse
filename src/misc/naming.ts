@@ -1,4 +1,5 @@
-import { DAOClient, noReject, ServerMetadata } from '@dcl/catalyst-node-commons'
+import { DAOClient, noReject } from '@zqbflynn/catalyst-node-commons'
+import { CatalystByIdResult } from '@zqbflynn/catalyst-contracts'
 import { lighthouseStorage } from '../config/simpleStorage'
 
 export const defaultNames = [
@@ -47,16 +48,22 @@ export async function pickName(configuredNames: string | undefined, daoClient: D
 }
 
 async function getLighthousesNames(daoClient: DAOClient) {
+  console.log('===> Start getLighthousesNamesV2')
   const servers = await daoClient.getAllServers()
+  console.log('===> getAllServers', servers)
   const namePromises = await Promise.all(Array.from(servers).map(getName).map(noReject))
+  console.log('===> namePromises,', namePromises)
   const existingNames: string[] = namePromises.filter((result) => result[0] === 'fulfilled').map((result) => result[1])
   return existingNames
 }
 
-async function getName(server: ServerMetadata): Promise<string> {
+/*
+ * modify by Flynn Jun
+ * */
+async function getName(server: CatalystByIdResult): Promise<string> {
   //Timeout is an option that is supported server side, but not browser side, so it doesn't compile if we don't cast it to any
   try {
-    const statusResponse = await fetch(`${server.baseUrl}/comms/status`, { timeout: 5000 } as any)
+    const statusResponse = await fetch(`${server.domain}/comms/status`, { timeout: 5000 } as any)
     const json = await statusResponse.json()
 
     if (json.name) {
@@ -65,7 +72,7 @@ async function getName(server: ServerMetadata): Promise<string> {
 
     throw new Error(`Response did not have the expected format. Response was: ${JSON.stringify(json)}`)
   } catch (e) {
-    console.warn(`Error while getting the name of ${server.baseUrl}, id: ${server.id}`, e.message)
+    console.warn(`Error while getting the name of ${server.domain}, id: ${server.id}`, e.message)
     throw e
   }
 }
