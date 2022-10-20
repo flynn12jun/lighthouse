@@ -19,6 +19,7 @@ export const createInstance = ({
   options: IConfig
 }): void => {
   const config = options
+  console.log('==========>createInstance: config: ', config)
   const realm: IRealm = new Realm()
 
   app.set('peerjs-realm', realm)

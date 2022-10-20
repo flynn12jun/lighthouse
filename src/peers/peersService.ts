@@ -84,6 +84,7 @@ export class PeersService implements IPeersService {
     return peerIds.map((id) => this.getPeerInfo(id))
   }
 
+  // 添加节点
   ensurePeerInfo(peer: PeerRequest): PeerInfo {
     const peerId = (peer.id ?? peer.peerId)!
     const existing = this.peers[peerId]

@@ -39,6 +39,7 @@ export function peerAuthHandler({
       const address = message.payload[0].payload
 
       if (!peersServiceGetter().existsPeerWithAddress(address)) {
+        console.log('=====lighthouse======> 设置新的节点', client.getId(), message.payload[0].payload)
         peersServiceGetter().setPeerAddress(client.getId(), message.payload[0].payload)
       } else {
         client.send({

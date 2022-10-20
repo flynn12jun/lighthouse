@@ -31,7 +31,7 @@ export function initPeerJsServer({
     concurrent_limit: configService.get(LighthouseConfig.MAX_CONCURRENT_USERS),
     transmissionFilter: (src, dst) => archipelagoService().areInSameIsland(src, dst)
   }
-
+  console.log('==========>start init peer server')
   const peerServer = ExpressPeerServer(netServer, options)
 
   peerServer.on('disconnect', (client: any) => {

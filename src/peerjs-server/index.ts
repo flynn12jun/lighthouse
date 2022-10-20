@@ -19,10 +19,12 @@ function ExpressPeerServer(server: Server, options?: Optional<IConfig>): Express
   }
 
   if (newOptions.proxied) {
+    console.log('====> set proxy')
     app.set('trust proxy', newOptions.proxied === 'false' ? false : !!newOptions.proxied)
   }
 
   app.on('mount', () => {
+    console.log('====> app on mount')
     if (!server) {
       throw new Error('Server is not passed to constructor - ' + "can't start PeerServer")
     }

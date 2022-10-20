@@ -30,7 +30,7 @@ import { HTTPProvider } from 'eth-connect'
 import fetch from 'node-fetch'
 
 const LIGHTHOUSE_PROTOCOL_VERSION = '1.0.0'
-const DEFAULT_ETH_NETWORK = 'zqb'
+const DEFAULT_ETH_NETWORK = 'mainnet'
 
 const CURRENT_ETH_NETWORK = process.env.ETH_NETWORK ?? DEFAULT_ETH_NETWORK
 
@@ -42,6 +42,7 @@ async function main() {
    * date: 2022/10/10
    * */
   const network = networks[CURRENT_ETH_NETWORK]
+  console.log('==========>当前网络:', network)
   const url = network.http
   const ethereumProvider = new HTTPProvider(url, { fetch })
 
