@@ -26,8 +26,8 @@
   "dependencies": {
     "@dcl/archipelago": "1.0.0",
     "@dcl/catalyst-api-specs": "1.2.2",
-    "@zqbflynn/catalyst-contracts": "^3.0.4",
-    "@zqbflynn/catalyst-node-commons": "^0.1.4",
+    "@zqbflynn/catalyst-contracts": "^3.0.5",
+    "@zqbflynn/catalyst-node-commons": "^0.1.5",
     "cors": "2.8.5",
     "dcl-catalyst-commons": "^9.0.6",
     "dcl-crypto": "2.3.0",
